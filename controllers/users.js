@@ -42,37 +42,13 @@ module.exports.addUser = async (req, res, next) => {
   }
 };
 
-module.exports.getUsers = async (req, res, next) => {
-  try {
-    const user = await User.find({});
-    res.send(user);
-  } catch (e) {
-    next(e);
-  }
-};
-
-module.exports.getUserById = async (req, res, next) => {
-  try {
-    const user = await User.findById(req.params.userId).orFail();
-    res.send(user);
-  } catch (error) {
-    if (error instanceof mongoose.Error.CastError) {
-      next(new BadRequestError('Некорректный id'));
-    } else if (error instanceof mongoose.Error.DocumentNotFoundError) {
-      next(new NotFoundError('Пользователь с указанным id не найден'));
-    } else {
-      next(error);
-    }
-  }
-};
-
 module.exports.updateUserInfo = async (req, res, next) => {
-  const { name, about } = req.body;
+  const { name, email } = req.body;
 
   try {
     const user = await User.findByIdAndUpdate(req.user._id, {
       name,
-      about,
+      email,
     }, {
       new: true,
       runValidators: true,
@@ -82,26 +58,6 @@ module.exports.updateUserInfo = async (req, res, next) => {
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
       next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
-    } else if (error instanceof mongoose.Error.DocumentNotFoundError) {
-      next(new NotFoundError('Пользователь с указанным id не найден'));
-    } else {
-      next(error);
-    }
-  }
-};
-
-module.exports.updateUserAvatar = async (req, res, next) => {
-  try {
-    const user = await User.findByIdAndUpdate(
-      req.user._id,
-      { avatar: req.body.avatar },
-      { new: true, runValidators: true },
-    );
-
-    res.send(user);
-  } catch (error) {
-    if (error instanceof mongoose.Error.ValidationError) {
-      next(new BadRequestError('Передан некорректный url'));
     } else if (error instanceof mongoose.Error.DocumentNotFoundError) {
       next(new NotFoundError('Пользователь с указанным id не найден'));
     } else {
