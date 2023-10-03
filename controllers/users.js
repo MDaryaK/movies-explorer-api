@@ -52,7 +52,7 @@ module.exports.updateUserInfo = async (req, res, next) => {
     }, {
       new: true,
       runValidators: true,
-    }).orFail();
+    });
 
     res.send(user);
   } catch (error) {

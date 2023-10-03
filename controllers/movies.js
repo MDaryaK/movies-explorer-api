@@ -26,7 +26,9 @@ module.exports.createMovie = async (req, res, next) => {
 
 module.exports.getMovies = async (req, res, next) => {
   try {
-    const cards = await Movie.find({});
+    const cards = await Movie.find({
+      owner: req.user._id,
+    });
     res.send(cards);
   } catch (e) {
     next(e);
