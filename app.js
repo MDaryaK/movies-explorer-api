@@ -9,7 +9,7 @@ const router = require('./routes/index');
 const errors = require('./middlewares/errors');
 
 const {
-  PORT = 3000,
+  PORT = 4000,
   URL = 'mongodb://localhost:27017/bitfilmsdb',
 } = process.env;
 
