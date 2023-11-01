@@ -16,6 +16,8 @@ module.exports.createMovie = async (req, res, next) => {
       .status(errorConstants.HTTP_STATUS_CREATED)
       .send(card);
   } catch (error) {
+    console.log(error);
+
     if (error instanceof mongoose.Error.ValidationError) {
       next(new BadRequestError('Переданы некорректные данные при создании карточки'));
     } else {
