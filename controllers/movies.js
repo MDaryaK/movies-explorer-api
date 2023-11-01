@@ -48,6 +48,8 @@ module.exports.deleteMovie = async (req, res, next) => {
         .orFail()
         .then(() => res.send({ message: 'Фильм успешно удалена' }))
         .catch((error) => {
+          console.log(error);
+
           if (error instanceof mongoose.Error.CastError) {
             next(new BadRequestError('Некорректный id'));
           } else if (error instanceof mongoose.Error.DocumentNotFoundError) {

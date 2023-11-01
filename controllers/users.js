@@ -10,8 +10,6 @@ const NotFoundError = require('../errors/NotFoundError');
 module.exports.addUser = async (req, res, next) => {
   const {
     name,
-    about,
-    avatar,
     email,
     password,
   } = req.body;
@@ -20,15 +18,15 @@ module.exports.addUser = async (req, res, next) => {
     const hash = await bcrypt.hash(password, 10);
 
     const user = await User.create({
-      name, about, avatar, email, password: hash,
+      name,
+      email,
+      password: hash,
     });
 
     res
       .status(errorConstants.HTTP_STATUS_CREATED)
       .send({
         name: user.name,
-        about: user.about,
-        avatar: user.avatar,
         email: user.email,
       });
   } catch (error) {
