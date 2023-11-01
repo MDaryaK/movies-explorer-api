@@ -1,5 +1,6 @@
 # Проект Movies API
 
+api.movies-darya.nomoredomainsrocks.ru
 
 ## Директории
 
