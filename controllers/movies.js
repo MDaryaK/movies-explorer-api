@@ -60,6 +60,7 @@ module.exports.deleteMovie = async (req, res, next) => {
         });
     })
     .catch((error) => {
+      console.log(error, req.params);
       if (error instanceof mongoose.Error.DocumentNotFoundError) {
         next(new NotFoundError('Фильм с указанным id не найдена'));
       } else {
