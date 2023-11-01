@@ -46,7 +46,7 @@ module.exports.deleteMovie = async (req, res, next) => {
       }
       Movie.deleteOne({ _id: req.params.movieId })
         .orFail()
-        .then(() => res.send({ message: 'Фильм успешно удалена' }))
+        .then(() => res.send({ message: 'Фильм успешно удален' }))
         .catch((error) => {
           console.log(error);
 
