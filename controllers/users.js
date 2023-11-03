@@ -44,6 +44,13 @@ module.exports.updateUserInfo = async (req, res, next) => {
   const { name, email } = req.body;
 
   try {
+    const checkUser = await User.findOne({ email });
+
+    if (checkUser && checkUser.email === email) {
+      next(new ConflictError('Email занят'));
+      return;
+    }
+
     const user = await User.findByIdAndUpdate(req.user._id, {
       name,
       email,
